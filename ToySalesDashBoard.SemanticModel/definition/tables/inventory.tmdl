@@ -1,0 +1,42 @@
+table inventory
+	lineageTag: b36b10b9-6976-4a11-89a8-47808ce4873e
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 5c01cca1-4b0d-483c-bce0-726acfe34d0a
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: bdf16c85-bb47-4525-be86-f8033883afd0
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Stock_On_Hand
+		dataType: int64
+		formatString: 0
+		lineageTag: e11e8408-9a4d-4909-bf0b-18d2f8106c46
+		summarizeBy: sum
+		sourceColumn: Stock_On_Hand
+
+		annotation SummarizationSetBy = Automatic
+
+	partition inventory = m
+		mode: import
+		source =
+				let
+				  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\inventory.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+				  #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Store_ID", Int64.Type}, {"Product_ID", Int64.Type}, {"Stock_On_Hand", Int64.Type}}, "es")
+				in
+				  #"Tipo de columna cambiado"
+
+	annotation PBI_ResultType = Table
+

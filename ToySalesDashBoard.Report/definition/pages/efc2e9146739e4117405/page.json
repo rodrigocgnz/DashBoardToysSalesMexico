@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "efc2e9146739e4117405",
+  "displayName": "Sales",
+  "displayOption": "FitToPage",
+  "height": 1080,
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "1338c32d56a58bb12054",
+      "target": "003de8a90b74fc9dae91",
+      "type": "DataFilter"
+    },
+    {
+      "source": "1338c32d56a58bb12054",
+      "target": "40fa2e42df1fddb9720a",
+      "type": "DataFilter"
+    }
+  ]
+}

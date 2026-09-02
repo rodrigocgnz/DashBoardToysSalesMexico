@@ -1,0 +1,132 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "1338c32d56a58bb12054",
+  "position": {
+    "x": 25.714285714285715,
+    "y": 602.85714285714289,
+    "z": 7000,
+    "height": 440,
+    "width": 632.85714285714289,
+    "tabOrder": 6000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "stores"
+                    }
+                  },
+                  "Property": "Store_Name"
+                }
+              },
+              "queryRef": "stores.Store_Name",
+              "nativeQueryRef": "Store_Name"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Total Unidades Vendidas"
+                }
+              },
+              "queryRef": "_Medidas.Total Unidades Vendidas",
+              "nativeQueryRef": "Total Unidades Vendidas",
+              "displayName": "Total Unidades Vendidas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Total Transacciones"
+                }
+              },
+              "queryRef": "_Medidas.Total Transacciones",
+              "nativeQueryRef": "Total Transacciones"
+            }
+          ],
+          "fieldParameters": [
+            {
+              "parameterExpr": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Parámetro"
+                    }
+                  },
+                  "Property": "Parámetro"
+                }
+              },
+              "index": 1,
+              "length": 1
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "Total Transacciones"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "38fb85dc33c66cae804d",
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "stores"
+              }
+            },
+            "Property": "Store_Name"
+          }
+        },
+        "type": "Categorical"
+      },
+      {
+        "name": "31e53cf4fbb94ef3181f",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "_Medidas"
+              }
+            },
+            "Property": "Total Transacciones"
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

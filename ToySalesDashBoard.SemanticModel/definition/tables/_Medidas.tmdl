@@ -1,0 +1,73 @@
+table _Medidas
+	lineageTag: bcdbd9d1-4b8f-4ac0-86c0-64e0007eb9c6
+
+	/// Ventas totales generadas (Unidades vendidas * Precio unitario)
+	measure 'Ventas Totales' = SUMX(sales, sales[Units] * RELATED(products[Product_Price]))
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: cbaeb260-0692-42c1-a127-13d4da7b25db
+
+	/// Costo total de los productos vendidos (Unidades vendidas * Costo unitario)
+	measure 'Costo Total' = SUMX(sales, sales[Units] * RELATED(products[Product_Cost]))
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: 9f3d5675-b190-4ed2-8bc6-fc9f5b653b7e
+
+	/// Beneficio bruto total generado (Ventas - Costos)
+	measure 'Margen de Beneficio' = [Ventas Totales] - [Costo Total]
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: 69642b16-8f5a-45ea-bc52-6baa97835f65
+
+	/// Porcentaje de margen de beneficio sobre ventas
+	measure '% Margen' = DIVIDE([Margen de Beneficio], [Ventas Totales], 0)
+		formatString: 0.0%
+		displayFolder: Medidas Clave
+		lineageTag: 37e6e3bf-a06c-4d33-8f55-dd1c90111c97
+
+	/// Cantidad total de unidades vendidas
+	measure 'Total Unidades Vendidas' = SUM(sales[Units])
+		formatString: #,##0
+		displayFolder: Medidas Clave
+		lineageTag: 3ae316e7-fff2-48a4-8a78-d76d07453018
+
+	/// Número total de transacciones registradas
+	measure 'Total Transacciones' = DISTINCTCOUNT(sales[Sale_ID])
+		formatString: #,##0
+		displayFolder: Medidas Clave
+		lineageTag: 7ffd258f-b524-4e27-9887-e6fd17bd0d17
+
+	/// Venta promedio por transacción realizada
+	measure 'Ticket Promedio' = DIVIDE([Ventas Totales], [Total Transacciones], 0)
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: 2ad55234-9bf8-46f4-91a0-6a467f558ec6
+
+	/// Precio promedio ponderado por unidad vendida
+	measure 'Precio Promedio Unitario' = DIVIDE([Ventas Totales], [Total Unidades Vendidas], 0)
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: 2e0f3a84-3eec-49d1-a305-3d6085de238c
+
+	/// Cantidad total de unidades en inventario
+	measure 'Stock Total' = SUM(inventory[Stock_On_Hand])
+		formatString: #,##0
+		displayFolder: Medidas Clave
+		lineageTag: 115bf044-9396-4ce7-a8a6-c9739e0cf1fa
+
+	/// Valor monetario total del inventario al costo
+	measure 'Valor Inventario' = SUMX(inventory, inventory[Stock_On_Hand] * RELATED(products[Product_Cost]))
+		formatString: $#,##0.00
+		displayFolder: Medidas Clave
+		lineageTag: 16eef13e-80ce-4669-aac4-7b37fdeebf85
+
+	column Valor
+		isHidden
+		lineageTag: bdc9cb42-0005-41cd-ae5e-d7f134b82edd
+		isNameInferred
+		sourceColumn: [Valor]
+
+	partition _Medidas = calculated
+		mode: import
+		source = ROW("Valor", BLANK())
+

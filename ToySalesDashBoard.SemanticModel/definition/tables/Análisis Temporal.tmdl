@@ -1,0 +1,62 @@
+table 'Análisis Temporal'
+	lineageTag: 9d21a62f-0914-469f-89b5-ea87ab1e236a
+
+	/// Grupo de cálculo para análisis de inteligencia de tiempo (MTD, QTD, YTD, YoY, etc.)
+	calculationGroup
+		precedence: 10
+
+		/// Valor en el período actual seleccionado
+		calculationItem Actual = SELECTEDMEASURE()
+
+		/// Acumulado del mes hasta la fecha
+		calculationItem MTD = TOTALMTD(SELECTEDMEASURE(), 'calendar'[Date])
+
+		/// Acumulado del trimestre hasta la fecha
+		calculationItem QTD = TOTALQTD(SELECTEDMEASURE(), 'calendar'[Date])
+
+		/// Acumulado del año hasta la fecha
+		calculationItem YTD = TOTALYTD(SELECTEDMEASURE(), 'calendar'[Date])
+
+		/// Mismo período del año anterior
+		calculationItem 'Año Anterior (PY)' = CALCULATE(SELECTEDMEASURE(), SAMEPERIODLASTYEAR('calendar'[Date]))
+
+		/// Acumulado del mes hasta la fecha del año anterior
+		calculationItem 'PY MTD' = TOTALMTD(CALCULATE(SELECTEDMEASURE(), SAMEPERIODLASTYEAR('calendar'[Date])), 'calendar'[Date])
+
+		/// Acumulado del año hasta la fecha del año anterior
+		calculationItem 'PY YTD' = TOTALYTD(CALCULATE(SELECTEDMEASURE(), SAMEPERIODLASTYEAR('calendar'[Date])), 'calendar'[Date])
+
+		/// Valor del mes inmediatamente anterior
+		calculationItem 'Mes Anterior (PM)' = CALCULATE(SELECTEDMEASURE(), DATEADD('calendar'[Date], -1, MONTH))
+
+		/// Diferencia absoluta respecto al mismo período del año anterior
+		calculationItem 'Dif YoY' =
+				VAR CurrentVal = SELECTEDMEASURE()
+				VAR PriorVal = CALCULATE(SELECTEDMEASURE(), SAMEPERIODLASTYEAR('calendar'[Date]))
+				RETURN
+				    IF(NOT ISBLANK(CurrentVal) && NOT ISBLANK(PriorVal), CurrentVal - PriorVal)
+
+		/// Variación porcentual respecto al mismo período del año anterior
+		calculationItem '% YoY' =
+				VAR CurrentVal = SELECTEDMEASURE()
+				VAR PriorVal = CALCULATE(SELECTEDMEASURE(), SAMEPERIODLASTYEAR('calendar'[Date]))
+				RETURN
+				    DIVIDE(CurrentVal - PriorVal, PriorVal)
+
+			formatStringDefinition = "0.0%"
+
+		/// Variación porcentual respecto al mes anterior
+		calculationItem '% MoM' =
+				VAR CurrentVal = SELECTEDMEASURE()
+				VAR PriorVal = CALCULATE(SELECTEDMEASURE(), DATEADD('calendar'[Date], -1, MONTH))
+				RETURN
+				    DIVIDE(CurrentVal - PriorVal, PriorVal)
+
+			formatStringDefinition = "0.0%"
+
+	column 'Análisis Temporal'
+		dataType: string
+		lineageTag: d2c5e170-3b78-46e3-aa2c-b9153e2131e1
+
+	partition 'Partition_Análisis Temporal' = calculationGroup
+

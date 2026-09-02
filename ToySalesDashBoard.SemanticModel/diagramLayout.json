@@ -1,0 +1,112 @@
+{
+  "version": "1.1.0",
+  "diagrams": [
+    {
+      "ordinal": 0,
+      "scrollPosition": {
+        "x": 439,
+        "y": 0
+      },
+      "nodes": [
+        {
+          "location": {
+            "x": 0,
+            "y": 48
+          },
+          "nodeIndex": "calendar",
+          "nodeLineageTag": "113b74e6-48a8-4210-8774-a6039d370ad1",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1022,
+            "y": 531
+          },
+          "nodeIndex": "inventory",
+          "nodeLineageTag": "b36b10b9-6976-4a11-89a8-47808ce4873e",
+          "size": {
+            "height": 152,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 537,
+            "y": 197
+          },
+          "nodeIndex": "products",
+          "nodeLineageTag": "81ff236a-3910-4b69-976b-b1987a302358",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 994,
+            "y": 193
+          },
+          "nodeIndex": "sales",
+          "nodeLineageTag": "cb217169-5b30-49fa-8f0a-857f39f6d0cc",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1410,
+            "y": 198
+          },
+          "nodeIndex": "stores",
+          "nodeLineageTag": "8672722b-e2dd-4192-b6eb-bd6a0e71ce5a",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1704,
+            "y": 0
+          },
+          "nodeIndex": "_Medidas",
+          "nodeLineageTag": "bcdbd9d1-4b8f-4ac0-86c0-64e0007eb9c6",
+          "size": {
+            "height": 200,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 1988,
+            "y": 48
+          },
+          "nodeIndex": "Análisis Temporal",
+          "size": {
+            "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        }
+      ],
+      "name": "Todas las tablas",
+      "zoomValue": 100,
+      "pinKeyFieldsToTop": false,
+      "showExtraHeaderInfo": false,
+      "hideKeyFieldsWhenCollapsed": false,
+      "tablesLocked": false
+    }
+  ],
+  "selectedDiagram": "Todas las tablas",
+  "defaultDiagram": "Todas las tablas"
+}

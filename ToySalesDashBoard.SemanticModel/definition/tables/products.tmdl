@@ -1,0 +1,65 @@
+table products
+	lineageTag: 81ff236a-3910-4b69-976b-b1987a302358
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 25bcabc3-f984-4912-985d-c3495873ed35
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Name
+		dataType: string
+		lineageTag: 016edc1b-b6eb-45e0-ae8f-da457779a896
+		summarizeBy: none
+		sourceColumn: Product_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Category
+		dataType: string
+		lineageTag: c3c195df-8783-4cd8-a3b9-0af3955701bd
+		summarizeBy: none
+		sourceColumn: Product_Category
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_Cost
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: 20080b97-8470-4995-a2cb-3f013fd081d7
+		summarizeBy: sum
+		sourceColumn: Product_Cost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-MX"}
+
+	column Product_Price
+		dataType: decimal
+		formatString: \$#,0.###############;-\$#,0.###############;\$#,0.###############
+		lineageTag: 3d187ea8-b77a-4ac8-9377-0d8439cdc705
+		summarizeBy: sum
+		sourceColumn: Product_Price
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"currencyCulture":"es-MX"}
+
+	partition products = m
+		mode: import
+		source =
+				let
+				  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\products.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
+				  #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Product_ID", Int64.Type}, {"Product_Name", type text}, {"Product_Category", type text}, {"Product_Cost", type text}, {"Product_Price", type text}}, "es"),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Tipo de columna cambiado",{{"Product_Cost", Currency.Type}, {"Product_Price", Currency.Type}})
+				in
+				  #"Tipo cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

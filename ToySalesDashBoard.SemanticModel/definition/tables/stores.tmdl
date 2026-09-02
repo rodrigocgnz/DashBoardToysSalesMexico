@@ -1,0 +1,64 @@
+table stores
+	lineageTag: 8672722b-e2dd-4192-b6eb-bd6a0e71ce5a
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 99ab9c71-aee4-47af-94ad-898469ae828d
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Name
+		dataType: string
+		lineageTag: a5bbc17b-007a-409f-9375-3b05761c1040
+		summarizeBy: none
+		sourceColumn: Store_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_City
+		dataType: string
+		lineageTag: 01aeb3c3-c44a-48a0-a69d-38bba9b3f066
+		summarizeBy: none
+		sourceColumn: Store_City
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Location
+		dataType: string
+		lineageTag: 3f955b2b-1135-495d-9d1d-210862dce658
+		summarizeBy: none
+		sourceColumn: Store_Location
+
+		annotation SummarizationSetBy = Automatic
+
+	column Store_Open_Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 0de5581b-62ff-4e5f-af45-2f53aac9aeb6
+		summarizeBy: none
+		sourceColumn: Store_Open_Date
+
+		variation Variación
+			isDefault
+			relationship: f389d10f-50e0-4a8f-a892-479c42ea35cb
+			defaultHierarchy: LocalDateTable_27c9e5a4-e724-409c-875e-de1abf501729.'Jerarquía de fechas'
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition stores = m
+		mode: import
+		source =
+				let
+				  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\stores.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
+				  #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Store_ID", Int64.Type}, {"Store_Name", type text}, {"Store_City", type text}, {"Store_Location", type text}, {"Store_Open_Date", type date}}, "es")
+				in
+				  #"Tipo de columna cambiado"
+
+	annotation PBI_ResultType = Table
+

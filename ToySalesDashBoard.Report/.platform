@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "ToySalesDashBoard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "4212ce80-2f98-4901-8c9d-225b11c1565f"
+  }
+}

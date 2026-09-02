@@ -1,0 +1,82 @@
+table calendar
+	lineageTag: 113b74e6-48a8-4210-8774-a6039d370ad1
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isUnique
+		formatString: Short Date
+		lineageTag: 3ba426de-933d-4783-9966-dfe180ba131b
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Año
+		dataType: int64
+		formatString: 0
+		lineageTag: dbee604c-2439-4533-a290-b2a9ab9f5849
+		summarizeBy: none
+		sourceColumn: Año
+
+		annotation SummarizationSetBy = User
+
+	column Mes
+		dataType: int64
+		formatString: 0
+		lineageTag: e9ec1a26-32f3-4d9e-8e83-80cffd378e8b
+		summarizeBy: none
+		sourceColumn: Mes
+
+		annotation SummarizationSetBy = User
+
+	column 'Nombre del mes'
+		dataType: string
+		lineageTag: 63f70d7e-512d-447c-ad1b-1e8303324905
+		summarizeBy: none
+		sourceColumn: Nombre del mes
+		sortByColumn: Mes
+
+		annotation SummarizationSetBy = Automatic
+
+	column Día
+		dataType: int64
+		formatString: 0
+		lineageTag: 55fdeb10-ec57-4e92-af17-226e44a61d0a
+		summarizeBy: none
+		sourceColumn: Día
+
+		annotation SummarizationSetBy = User
+
+	column 'Nombre del día'
+		dataType: string
+		lineageTag: 97fa3f38-c758-49b5-8002-eeefca03c889
+		summarizeBy: none
+		sourceColumn: Nombre del día
+
+		annotation SummarizationSetBy = Automatic
+
+	partition calendar = m
+		mode: import
+		source = ```
+				let
+				    Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\calendar.csv"), [Delimiter = ",", Columns = 1, Encoding = 65001]),
+				    #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+				    #"Tipo cambiado con configuración regional" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Date", type date}}, "en-US"),
+				    
+				    // Extracción de columnas para la tabla calendario
+				    #"Año insertado" = Table.AddColumn(#"Tipo cambiado con configuración regional", "Año", each Date.Year([Date]), Int64.Type),
+				    #"Mes insertado" = Table.AddColumn(#"Año insertado", "Mes", each Date.Month([Date]), Int64.Type),
+				    #"Nombre de mes insertado" = Table.AddColumn(#"Mes insertado", "Nombre del mes", each Date.MonthName([Date]), type text),
+				    #"Día insertado" = Table.AddColumn(#"Nombre de mes insertado", "Día", each Date.Day([Date]), Int64.Type),
+				    #"Nombre de día insertado" = Table.AddColumn(#"Día insertado", "Nombre del día", each Date.DayOfWeekName([Date]), type text)
+				in
+				    #"Nombre de día insertado"
+				```
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

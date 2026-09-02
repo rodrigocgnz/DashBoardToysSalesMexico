@@ -1,0 +1,64 @@
+table sales
+	lineageTag: cb217169-5b30-49fa-8f0a-857f39f6d0cc
+
+	column Sale_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: dabc5769-9bb6-4b09-99f8-50ada3d5e3b5
+		summarizeBy: count
+		sourceColumn: Sale_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: a7a5c40f-9f0b-4b0f-85b1-96fa6f147e6d
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Store_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: 217759ce-71ad-4b4c-960d-19d1ff194dd5
+		summarizeBy: none
+		sourceColumn: Store_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Product_ID
+		dataType: int64
+		formatString: 0
+		lineageTag: fef81b9c-ad81-407b-b522-96be9bc0ab38
+		summarizeBy: none
+		sourceColumn: Product_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Units
+		dataType: int64
+		formatString: 0
+		lineageTag: 31f19fce-2397-427f-b4a9-fdfb166b9ca5
+		summarizeBy: sum
+		sourceColumn: Units
+
+		annotation SummarizationSetBy = Automatic
+
+	partition sales = m
+		mode: import
+		source =
+				let
+				  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\sales.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
+				  #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
+				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Sale_ID", Int64.Type}, {"Date", type date}, {"Store_ID", Int64.Type}, {"Product_ID", Int64.Type}, {"Units", Int64.Type}}, "es")
+				in
+				    #"Tipo de columna cambiado"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
+

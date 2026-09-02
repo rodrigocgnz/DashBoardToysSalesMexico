@@ -1,0 +1,48 @@
+table Parámetro
+	lineageTag: bd15a143-c812-4d9b-9eab-2218a2c15aa0
+
+	column Parámetro
+		lineageTag: 5bf8f958-17a6-4bd0-aa55-79b1726356d0
+		summarizeBy: none
+		sourceColumn: [Value1]
+		sortByColumn: 'Parámetro Orden'
+
+		relatedColumnDetails
+			groupByColumn: 'Parámetro Campos'
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parámetro Campos'
+		isHidden
+		lineageTag: 306ff4ab-163c-4c55-a5d0-ca799cd79961
+		summarizeBy: none
+		sourceColumn: [Value2]
+		sortByColumn: 'Parámetro Orden'
+
+		extendedProperty ParameterMetadata =
+				{
+				  "version": 3,
+				  "kind": 2
+				}
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Parámetro Orden'
+		isHidden
+		formatString: 0
+		lineageTag: 93b443e0-0389-409a-a49b-c9d36d47f25a
+		summarizeBy: sum
+		sourceColumn: [Value3]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Parámetro = calculated
+		mode: import
+		source =
+				{
+				    ("Total Unidades Vendidas", NAMEOF('_Medidas'[Total Unidades Vendidas]), 0),
+				    ("Ventas Totales", NAMEOF('_Medidas'[Ventas Totales]), 1)
+				}
+
+	annotation PBI_Id = ed896dbf781543d2bbbe662105cfd129
+

@@ -1,0 +1,25 @@
+relationship AutoDetected_d0ee7fa0-1a2d-4df1-a53a-8495e118b2fc
+	fromColumn: inventory.Product_ID
+	toColumn: products.Product_ID
+
+relationship AutoDetected_3602f783-1511-4d57-978d-8405d7ca4236
+	fromColumn: sales.Product_ID
+	toColumn: products.Product_ID
+
+relationship f389d10f-50e0-4a8f-a892-479c42ea35cb
+	joinOnDateBehavior: datePartOnly
+	fromColumn: stores.Store_Open_Date
+	toColumn: LocalDateTable_27c9e5a4-e724-409c-875e-de1abf501729.Date
+
+relationship AutoDetected_2480dbe5-9ce2-47b7-a558-b54f82b21707
+	fromColumn: inventory.Store_ID
+	toColumn: stores.Store_ID
+
+relationship AutoDetected_6a4d4203-ed95-404a-91d9-d5fd48d9693f
+	fromColumn: sales.Store_ID
+	toColumn: stores.Store_ID
+
+relationship sales_calendar_Date
+	fromColumn: sales.Date
+	toColumn: calendar.Date
+

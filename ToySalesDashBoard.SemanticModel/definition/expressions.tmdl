@@ -1,0 +1,14 @@
+expression data_dictionary =
+		let
+		  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\data_dictionary.csv"), [Delimiter = ",", Columns = 3, QuoteStyle = QuoteStyle.None]),
+		    #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars=true]),
+		    #"Tipo cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos",{{"Table", type text}, {"Field", type text}, {"Description", type text}})
+		in
+		  #"Tipo cambiado"
+	lineageTag: af693df3-ce18-4ecd-a1b4-919c37d74acc
+	queryGroup: Dictionary
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
