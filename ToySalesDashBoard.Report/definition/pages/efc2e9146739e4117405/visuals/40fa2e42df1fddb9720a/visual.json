@@ -1,16 +1,16 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "40fa2e42df1fddb9720a",
   "position": {
-    "x": 851.81818181818176,
-    "y": 187.27272727272725,
+    "x": 1093.3333333333335,
+    "y": 238.33333333333334,
     "z": 0,
-    "height": 397.27272727272725,
-    "width": 902.72727272727263,
+    "height": 396.66666666666669,
+    "width": 788.33333333333337,
     "tabOrder": 0
   },
   "visual": {
-    "visualType": "lineChart",
+    "visualType": "lineStackedColumnComboChart",
     "query": {
       "queryState": {
         "Category": {
@@ -32,24 +32,6 @@
             }
           ]
         },
-        "Series": {
-          "projections": [
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "calendar"
-                    }
-                  },
-                  "Property": "Año"
-                }
-              },
-              "queryRef": "calendar.Año",
-              "nativeQueryRef": "Año"
-            }
-          ]
-        },
         "Y": {
           "projections": [
             {
@@ -60,65 +42,34 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Total Unidades Vendidas"
+                  "Property": "Ventas Totales"
                 }
               },
-              "queryRef": "_Medidas.Total Unidades Vendidas",
-              "nativeQueryRef": "Total Unidades Vendidas",
-              "displayName": "Total Unidades Vendidas"
+              "queryRef": "_Medidas.Ventas Totales",
+              "nativeQueryRef": "Ventas Totales"
             }
-          ],
-          "fieldParameters": [
+          ]
+        },
+        "Y2": {
+          "projections": [
             {
-              "parameterExpr": {
-                "Column": {
+              "field": {
+                "Measure": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "Parámetro"
+                      "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Parámetro"
+                  "Property": "Margen de Beneficio"
                 }
               },
-              "index": 0,
-              "length": 1
+              "queryRef": "_Medidas.Margen de Beneficio",
+              "nativeQueryRef": "Margen de Beneficio"
             }
           ]
         }
       }
     },
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "1cb94ab29aea29f6bf02",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "calendar"
-              }
-            },
-            "Property": "Nombre del mes"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "12f5c82e8cf38f4689d0",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "calendar"
-              }
-            },
-            "Property": "Año"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

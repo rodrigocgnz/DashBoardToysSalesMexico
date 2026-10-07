@@ -61,6 +61,18 @@ table _Medidas
 		displayFolder: Medidas Clave
 		lineageTag: 16eef13e-80ce-4669-aac4-7b37fdeebf85
 
+	measure '% Ventas' =
+			
+			DIVIDE(
+			    [Ventas Totales],
+			    CALCULATE( [Ventas Totales], ALLSELECTED() )
+			)
+		formatString: 0.0%
+		displayFolder: Medidas Clave
+		lineageTag: 2bba22e8-5084-4ee9-8c37-ebf165650643
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
 	column Valor
 		isHidden
 		lineageTag: bdc9cb42-0005-41cd-ae5e-d7f134b82edd

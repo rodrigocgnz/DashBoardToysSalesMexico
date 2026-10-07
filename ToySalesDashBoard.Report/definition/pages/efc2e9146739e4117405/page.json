@@ -7,14 +7,14 @@
   "width": 1920,
   "visualInteractions": [
     {
-      "source": "1338c32d56a58bb12054",
-      "target": "003de8a90b74fc9dae91",
+      "source": "a18e8e0f004b29472c67",
+      "target": "a6d60da0ceca2ec0bc6e",
       "type": "DataFilter"
     },
     {
-      "source": "1338c32d56a58bb12054",
+      "source": "af1d79e88adc92bd4476",
       "target": "40fa2e42df1fddb9720a",
-      "type": "DataFilter"
+      "type": "NoFilter"
     }
   ]
 }

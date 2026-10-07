@@ -31,7 +31,7 @@
           "expanded": {
             "expr": {
               "Literal": {
-                "Value": "true"
+                "Value": "false"
               }
             }
           }
@@ -48,6 +48,11 @@
           "name": "Fluent2-CY26SU08",
           "path": "BaseThemes/Fluent2-CY26SU08.json",
           "type": "BaseTheme"
+        },
+        {
+          "name": "mexico.states.topo",
+          "path": "Shapemaps/mexico.states.topo.json",
+          "type": "ShapeMap"
         }
       ]
     }

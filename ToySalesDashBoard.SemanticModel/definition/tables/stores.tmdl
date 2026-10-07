@@ -50,15 +50,60 @@ table stores
 
 		annotation UnderlyingDateTimeDataType = Date
 
+	column Store_State
+		dataType: string
+		lineageTag: fb6e760d-350e-4a34-a8a9-afcea453ae1f
+		summarizeBy: none
+		sourceColumn: Store_State
+
+		annotation SummarizationSetBy = Automatic
+
 	partition stores = m
 		mode: import
-		source =
+		source = ```
 				let
-				  Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\stores.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
-				  #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
-				  #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Store_ID", Int64.Type}, {"Store_Name", type text}, {"Store_City", type text}, {"Store_Location", type text}, {"Store_Open_Date", type date}}, "es")
+				    Origen = Csv.Document(File.Contents("C:\Users\User\Desktop\Maven Toys Data\stores.csv"), [Delimiter = ",", Columns = 5, QuoteStyle = QuoteStyle.None]),
+				    #"Encabezados promovidos" = Table.PromoteHeaders(Origen, [PromoteAllScalars = true]),
+				    #"Tipo de columna cambiado" = Table.TransformColumnTypes(#"Encabezados promovidos", {{"Store_ID", Int64.Type}, {"Store_Name", type text}, {"Store_City", type text}, {"Store_Location", type text}, {"Store_Open_Date", type date}}, "es"),
+				    
+				    #"Estado Agregado" = Table.AddColumn(#"Tipo de columna cambiado", "Store_State", each 
+				        if [Store_City] = "Guadalajara" then "Jalisco" 
+				        else if [Store_City] = "Monterrey" then "Nuevo Leon" 
+				        else if [Store_City] = "Saltillo" then "Coahuila" 
+				        else if [Store_City] = "La Paz" then "Baja California Sur" 
+				        else if [Store_City] = "Mexicali" then "Baja California" 
+				        else if [Store_City] = "Pachuca" then "Hidalgo" 
+				        else if [Store_City] = "Cuidad de Mexico" or [Store_City] = "Ciudad de Mexico" then "Mexico City" 
+				        else if [Store_City] = "Campeche" then "Campeche" 
+				        else if [Store_City] = "Cuernavaca" then "Morelos" 
+				        else if [Store_City] = "Chetumal" then "Quintana Roo" 
+				        else if [Store_City] = "Guanajuato" then "Guanajuato" 
+				        else if [Store_City] = "Tuxtla Gutierrez" then "Chiapas" 
+				        else if [Store_City] = "San Luis Potosi" then "San Luis Potosi" 
+				        else if [Store_City] = "Toluca" then "Mexico State" 
+				        else if [Store_City] = "Merida" then "Yucatan" 
+				        else if [Store_City] = "Puebla" then "Puebla" 
+				        else if [Store_City] = "Zacatecas" then "Zacatecas" 
+				        else if [Store_City] = "Santiago" then "Nuevo Leon" 
+				        else if [Store_City] = "Chihuahua" then "Chihuahua" 
+				        else if [Store_City] = "Aguascalientes" then "Aguascalientes" 
+				        else if [Store_City] = "Ciudad Victoria" then "Tamaulipas" 
+				        else if [Store_City] = "Oaxaca" then "Oaxaca" 
+				        else if [Store_City] = "Xalapa" then "Veracruz" 
+				        else if [Store_City] = "Hermosillo" then "Sonora" 
+				        else if [Store_City] = "Villahermosa" then "Tabasco" 
+				        else if [Store_City] = "Chilpancingo" then "Guerrero" 
+				        else if [Store_City] = "Morelia" then "Michoacan" 
+				        else if [Store_City] = "Durango" then "Durango" 
+				        else if [Store_City] = "Culiacan" then "Sinaloa" 
+				        else "Otro", 
+				    type text),
+				    #"Columnas reordenadas" = Table.ReorderColumns(#"Estado Agregado",{"Store_ID", "Store_Name", "Store_City", "Store_State", "Store_Location", "Store_Open_Date"})
 				in
-				  #"Tipo de columna cambiado"
+				    #"Columnas reordenadas"
+				```
 
 	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navegación
 

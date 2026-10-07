@@ -2,10 +2,10 @@
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
   "name": "772320eff9ecdf4a0be8",
   "position": {
-    "x": 178.33333333333334,
-    "y": 38.333333333333336,
+    "x": 22.857142857142858,
+    "y": 22.857142857142858,
     "z": 0,
-    "height": 1002.8571428571429,
+    "height": 1030,
     "width": 1111.4285714285716,
     "tabOrder": 0
   },
@@ -23,11 +23,11 @@
                       "Entity": "products"
                     }
                   },
-                  "Property": "Product_Category"
+                  "Property": "Product_Name"
                 }
               },
-              "queryRef": "products.Product_Category",
-              "nativeQueryRef": "Product_Category",
+              "queryRef": "products.Product_Name",
+              "nativeQueryRef": "Product_Name",
               "active": true
             },
             {
@@ -35,14 +35,14 @@
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "products"
+                      "Entity": "stores"
                     }
                   },
-                  "Property": "Product_Name"
+                  "Property": "Store_Name"
                 }
               },
-              "queryRef": "products.Product_Name",
-              "nativeQueryRef": "Product_Name",
+              "queryRef": "stores.Store_Name",
+              "nativeQueryRef": "Store_Name",
               "active": true
             }
           ]
@@ -71,48 +71,6 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Costo Total"
-                }
-              },
-              "queryRef": "_Medidas.Costo Total",
-              "nativeQueryRef": "Costo Total"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
-                  "Property": "Ventas Totales"
-                }
-              },
-              "queryRef": "_Medidas.Ventas Totales",
-              "nativeQueryRef": "Ventas Totales"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
-                  "Property": "% Margen"
-                }
-              },
-              "queryRef": "_Medidas.% Margen",
-              "nativeQueryRef": "% Margen"
-            },
-            {
-              "field": {
-                "Measure": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "_Medidas"
-                    }
-                  },
                   "Property": "Stock Total"
                 }
               },
@@ -131,7 +89,7 @@
         "levels": [
           {
             "queryRefs": [
-              "products.Product_Category"
+              "products.Product_Name"
             ],
             "isCollapsed": true,
             "identityKeys": [
@@ -142,7 +100,7 @@
                       "Entity": "products"
                     }
                   },
-                  "Property": "Product_Category"
+                  "Property": "Product_Name"
                 }
               }
             ],
@@ -150,9 +108,21 @@
           },
           {
             "queryRefs": [
-              "products.Product_Name"
+              "stores.Store_Name"
             ],
             "isCollapsed": true,
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "stores"
+                    }
+                  },
+                  "Property": "Store_Name"
+                }
+              }
+            ],
             "isPinned": true
           }
         ],
@@ -162,7 +132,7 @@
               "identityValues": [
                 {
                   "Literal": {
-                    "Value": "'Art & Crafts'"
+                    "Value": "'Colorbuds'"
                   }
                 }
               ],
@@ -173,107 +143,5 @@
       }
     ],
     "drillFilterOtherVisuals": true
-  },
-  "filterConfig": {
-    "filters": [
-      {
-        "name": "7a204c5d5ab74987b567",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "products"
-              }
-            },
-            "Property": "Product_Category"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "6c9cdc5888cc4ddaf609",
-        "field": {
-          "Column": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "products"
-              }
-            },
-            "Property": "Product_Name"
-          }
-        },
-        "type": "Categorical"
-      },
-      {
-        "name": "70e908b10b3e0bff825f",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "Total Unidades Vendidas"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d224f19523a57a3aa4be",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "Ventas Totales"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "f841b7954dad4d6b8dde",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "Costo Total"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "d2be00cb6915b5732d66",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "% Margen"
-          }
-        },
-        "type": "Advanced"
-      },
-      {
-        "name": "972437b5116e2d2667ab",
-        "field": {
-          "Measure": {
-            "Expression": {
-              "SourceRef": {
-                "Entity": "_Medidas"
-              }
-            },
-            "Property": "Stock Total"
-          }
-        },
-        "type": "Advanced"
-      }
-    ]
   }
 }

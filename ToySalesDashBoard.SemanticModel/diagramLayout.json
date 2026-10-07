@@ -4,7 +4,7 @@
     {
       "ordinal": 0,
       "scrollPosition": {
-        "x": 439,
+        "x": 1559.3333740234375,
         "y": 0
       },
       "nodes": [
@@ -94,6 +94,19 @@
           "nodeIndex": "Análisis Temporal",
           "size": {
             "height": 104,
+            "width": 234
+          },
+          "zIndex": 0
+        },
+        {
+          "location": {
+            "x": 2272,
+            "y": 265.5
+          },
+          "nodeIndex": "Parámetro",
+          "nodeLineageTag": "bd15a143-c812-4d9b-9eab-2218a2c15aa0",
+          "size": {
+            "height": 152,
             "width": 234
           },
           "zIndex": 0
