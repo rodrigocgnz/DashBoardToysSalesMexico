@@ -1,38 +1,38 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
-  "name": "1d04c64770e76e0cd8e3",
+  "name": "7291e4392c8c0d795b64",
   "position": {
-    "x": 318,
-    "y": 662,
-    "z": 7000,
-    "height": 384,
-    "width": 772,
-    "tabOrder": 7000
+    "x": 1162,
+    "y": 182,
+    "z": 2000,
+    "height": 744,
+    "width": 324,
+    "tabOrder": 2000
   },
   "visual": {
-    "visualType": "pivotTable",
+    "visualType": "barChart",
     "query": {
       "queryState": {
-        "Rows": {
+        "Category": {
           "projections": [
             {
               "field": {
                 "Column": {
                   "Expression": {
                     "SourceRef": {
-                      "Entity": "products"
+                      "Entity": "inventory"
                     }
                   },
-                  "Property": "Product_Category"
+                  "Property": "Estado Cobertura"
                 }
               },
-              "queryRef": "products.Product_Category",
-              "nativeQueryRef": "Product_Category",
+              "queryRef": "inventory.Estado Cobertura",
+              "nativeQueryRef": "Estado Cobertura",
               "active": true
             }
           ]
         },
-        "Values": {
+        "Y": {
           "projections": [
             {
               "field": {
@@ -42,11 +42,11 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Ventas Totales"
+                  "Property": "SKUs Agotados"
                 }
               },
-              "queryRef": "_Medidas.Ventas Totales",
-              "nativeQueryRef": "Ventas Totales"
+              "queryRef": "_Medidas.SKUs Agotados",
+              "nativeQueryRef": "SKUs Agotados"
             },
             {
               "field": {
@@ -56,11 +56,11 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Margen de Beneficio"
+                  "Property": "SKUs Críticos"
                 }
               },
-              "queryRef": "_Medidas.Margen de Beneficio",
-              "nativeQueryRef": "Margen de Beneficio"
+              "queryRef": "_Medidas.SKUs Críticos",
+              "nativeQueryRef": "SKUs Críticos"
             },
             {
               "field": {
@@ -70,11 +70,11 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "% Margen"
+                  "Property": "SKUs Exceso"
                 }
               },
-              "queryRef": "_Medidas.% Margen",
-              "nativeQueryRef": "% Margen"
+              "queryRef": "_Medidas.SKUs Exceso",
+              "nativeQueryRef": "SKUs Exceso"
             },
             {
               "field": {
@@ -84,47 +84,29 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "% Ventas"
+                  "Property": "SKUs Sanos"
                 }
               },
-              "queryRef": "_Medidas.% Ventas",
-              "nativeQueryRef": "% Ventas"
+              "queryRef": "_Medidas.SKUs Sanos",
+              "nativeQueryRef": "SKUs Sanos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "SKUs Sin Ventas"
+                }
+              },
+              "queryRef": "_Medidas.SKUs Sin Ventas",
+              "nativeQueryRef": "SKUs Sin Ventas"
             }
           ]
         }
-      },
-      "sortDefinition": {
-        "sort": [
-          {
-            "field": {
-              "Measure": {
-                "Expression": {
-                  "SourceRef": {
-                    "Entity": "_Medidas"
-                  }
-                },
-                "Property": "Ventas Totales"
-              }
-            },
-            "direction": "Descending"
-          }
-        ]
       }
-    },
-    "visualContainerObjects": {
-      "title": [
-        {
-          "properties": {
-            "text": {
-              "expr": {
-                "Literal": {
-                  "Value": "'Categorias'"
-                }
-              }
-            }
-          }
-        }
-      ]
     },
     "drillFilterOtherVisuals": true
   }

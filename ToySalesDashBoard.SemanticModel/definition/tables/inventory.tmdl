@@ -28,6 +28,70 @@ table inventory
 
 		annotation SummarizationSetBy = Automatic
 
+	column 'Ventas 90D' =
+			VAR CurStore = inventory[Store_ID]
+			VAR CurProd = inventory[Product_ID]
+			VAR MaxDate = CALCULATE(MAX(sales[Date]), REMOVEFILTERS(sales))
+			VAR MinDate = MaxDate - 89
+			RETURN
+			    CALCULATE(
+			        SUM(sales[Units]),
+			        sales[Store_ID] = CurStore,
+			        sales[Product_ID] = CurProd,
+			        sales[Date] >= MinDate,
+			        sales[Date] <= MaxDate,
+			        REMOVEFILTERS(sales)
+			    ) + 0
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 17f060ca-7ff3-487e-a53c-9cb41aaa4449
+
+	column 'Venta Diaria Promedio' = DIVIDE(inventory[Ventas 90D], 90)
+		dataType: double
+		formatString: 0.00
+		lineageTag: f7ecea6f-9ba9-49a2-8a0d-c3973bfc96a9
+
+	column 'Días Cobertura' =
+			IF(
+			    inventory[Stock_On_Hand] = 0,
+			    0,
+			    IF(
+			        inventory[Ventas 90D] = 0,
+			        BLANK(),
+			        DIVIDE(inventory[Stock_On_Hand], inventory[Venta Diaria Promedio])
+			    )
+			)
+		dataType: double
+		formatString: 0.0
+		lineageTag: a7962b74-0a2f-4013-8c2c-5490f0bb9b43
+
+	column 'Orden Estado Cobertura' =
+			SWITCH(
+			    TRUE(),
+			    inventory[Stock_On_Hand] = 0, 1,
+			    inventory[Días Cobertura] <= 14 && inventory[Ventas 90D] > 0, 2,
+			    inventory[Días Cobertura] <= 60 && inventory[Ventas 90D] > 0, 3,
+			    inventory[Días Cobertura] > 60 && inventory[Ventas 90D] > 0, 4,
+			    5
+			)
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: ea5c0f61-a544-486a-96ac-2e8a36077e96
+
+	column 'Estado Cobertura' =
+			SWITCH(
+			    TRUE(),
+			    inventory[Stock_On_Hand] = 0, "Agotado",
+			    inventory[Ventas 90D] = 0, "Sin ventas",
+			    inventory[Días Cobertura] <= 14, "Crítico",
+			    inventory[Días Cobertura] <= 60, "Sano",
+			    "Exceso"
+			)
+		dataType: string
+		lineageTag: 96b4a79d-cd91-426b-98c6-e807465334b5
+		sortByColumn: 'Orden Estado Cobertura'
+
 	partition inventory = m
 		mode: import
 		source =

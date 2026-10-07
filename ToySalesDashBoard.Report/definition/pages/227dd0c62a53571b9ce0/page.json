@@ -1,8 +1,15 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
   "name": "227dd0c62a53571b9ce0",
-  "displayName": "Detalle",
+  "displayName": "Inventario",
   "displayOption": "FitToPage",
   "height": 1080,
-  "width": 1920
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "7291e4392c8c0d795b64",
+      "target": "772320eff9ecdf4a0be8",
+      "type": "DataFilter"
+    }
+  ]
 }

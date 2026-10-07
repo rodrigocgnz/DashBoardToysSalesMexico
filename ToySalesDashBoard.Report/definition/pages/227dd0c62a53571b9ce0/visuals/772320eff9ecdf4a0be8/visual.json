@@ -1,12 +1,12 @@
 {
-  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
   "name": "772320eff9ecdf4a0be8",
   "position": {
-    "x": 22.857142857142858,
-    "y": 22.857142857142858,
+    "x": 52,
+    "y": 154,
     "z": 0,
-    "height": 1030,
-    "width": 1111.4285714285716,
+    "height": 700,
+    "width": 1078,
     "tabOrder": 0
   },
   "visual": {
@@ -29,21 +29,6 @@
               "queryRef": "products.Product_Name",
               "nativeQueryRef": "Product_Name",
               "active": true
-            },
-            {
-              "field": {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "stores"
-                    }
-                  },
-                  "Property": "Store_Name"
-                }
-              },
-              "queryRef": "stores.Store_Name",
-              "nativeQueryRef": "Store_Name",
-              "active": true
             }
           ]
         },
@@ -57,11 +42,11 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Total Unidades Vendidas"
+                  "Property": "Stock Total"
                 }
               },
-              "queryRef": "_Medidas.Total Unidades Vendidas",
-              "nativeQueryRef": "Total Unidades Vendidas"
+              "queryRef": "_Medidas.Stock Total",
+              "nativeQueryRef": "Stock Total"
             },
             {
               "field": {
@@ -71,14 +56,45 @@
                       "Entity": "_Medidas"
                     }
                   },
-                  "Property": "Stock Total"
+                  "Property": "Días Cobertura"
                 }
               },
-              "queryRef": "_Medidas.Stock Total",
-              "nativeQueryRef": "Stock Total"
+              "queryRef": "_Medidas.Días Cobertura",
+              "nativeQueryRef": "Días Cobertura"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Medidas"
+                    }
+                  },
+                  "Property": "Estado Cobertura"
+                }
+              },
+              "queryRef": "_Medidas.Estado Cobertura",
+              "nativeQueryRef": "Estado Cobertura"
             }
           ]
         }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "_Medidas"
+                  }
+                },
+                "Property": "Estado Cobertura"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
       }
     },
     "expansionStates": [
@@ -105,41 +121,9 @@
               }
             ],
             "isPinned": true
-          },
-          {
-            "queryRefs": [
-              "stores.Store_Name"
-            ],
-            "isCollapsed": true,
-            "identityKeys": [
-              {
-                "Column": {
-                  "Expression": {
-                    "SourceRef": {
-                      "Entity": "stores"
-                    }
-                  },
-                  "Property": "Store_Name"
-                }
-              }
-            ],
-            "isPinned": true
           }
         ],
-        "root": {
-          "children": [
-            {
-              "identityValues": [
-                {
-                  "Literal": {
-                    "Value": "'Colorbuds'"
-                  }
-                }
-              ],
-              "isToggled": true
-            }
-          ]
-        }
+        "root": {}
       }
     ],
     "drillFilterOtherVisuals": true

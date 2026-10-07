@@ -73,6 +73,119 @@ table _Medidas
 
 		annotation PBI_FormatHint = {"isCustom":true}
 
+	/// Días de cobertura de inventario calculados a partir de la venta diaria promedio de los últimos 90 días
+	measure 'Días Cobertura' = ```
+			VAR MaxFecha = CALCULATE(MAX(sales[Date]), REMOVEFILTERS('calendar'))
+			VAR MinFecha = MaxFecha - 89
+			VAR Ventas90D = 
+			    CALCULATE(
+			        SUM(sales[Units]),
+			        DATESBETWEEN('calendar'[Date], MinFecha, MaxFecha)
+			    )
+			VAR VentaDiaria = DIVIDE(Ventas90D, 90)
+			VAR Stock = [Stock Total]
+			RETURN
+			    IF(
+			        Stock = 0, 0,
+			        IF(Ventas90D = 0, BLANK(), DIVIDE(Stock, VentaDiaria))
+			    )
+			```
+		formatString: 0.0
+		displayFolder: Cobertura e Inventario
+		lineageTag: 522f3d54-bdd2-4ab2-995b-226205b770a2
+
+	measure 'SKUs Agotados' = CALCULATE(COUNTROWS(inventory), inventory[Estado Cobertura] = "Agotado")
+		formatString: #,##0
+		displayFolder: Cobertura e Inventario\SKUs
+		lineageTag: 91e7be7f-3bc2-4bc1-b1c1-6da3e44c91d1
+
+	measure 'SKUs Críticos' = CALCULATE(COUNTROWS(inventory), inventory[Estado Cobertura] = "Crítico")
+		formatString: #,##0
+		displayFolder: Cobertura e Inventario\SKUs
+		lineageTag: 78897d87-98ca-424f-adef-539301343686
+
+	measure 'SKUs Sanos' = CALCULATE(COUNTROWS(inventory), inventory[Estado Cobertura] = "Sano")
+		formatString: #,##0
+		displayFolder: Cobertura e Inventario\SKUs
+		lineageTag: 331bcc92-7a89-4a22-a9d9-b295d7889b16
+
+	measure 'SKUs Exceso' = CALCULATE(COUNTROWS(inventory), inventory[Estado Cobertura] = "Exceso")
+		formatString: #,##0
+		displayFolder: Cobertura e Inventario\SKUs
+		lineageTag: 862c74f1-0074-4ae1-b482-73505834cb57
+
+	measure 'SKUs Sin Ventas' = CALCULATE(COUNTROWS(inventory), inventory[Estado Cobertura] = "Sin ventas")
+		formatString: #,##0
+		displayFolder: Cobertura e Inventario\SKUs
+		lineageTag: efb6488f-e592-4f07-8351-d95843a8febf
+
+	measure 'Valor Agotado' = COALESCE(CALCULATE([Valor Inventario], inventory[Estado Cobertura] = "Agotado"), 0)
+		formatString: $#,##0.00
+		displayFolder: Cobertura e Inventario\Valor
+		lineageTag: 2595404d-55f0-4f16-b122-5984268f6426
+
+	measure 'Valor Crítico' = COALESCE(CALCULATE([Valor Inventario], inventory[Estado Cobertura] = "Crítico"), 0)
+		formatString: $#,##0.00
+		displayFolder: Cobertura e Inventario\Valor
+		lineageTag: 38941aa6-feff-4a0d-acdf-18d1a0595594
+
+	measure 'Valor Sano' = COALESCE(CALCULATE([Valor Inventario], inventory[Estado Cobertura] = "Sano"), 0)
+		formatString: $#,##0.00
+		displayFolder: Cobertura e Inventario\Valor
+		lineageTag: 2bce9b76-bbbe-4f43-b71d-76fdb830359d
+
+	measure 'Valor Exceso' = COALESCE(CALCULATE([Valor Inventario], inventory[Estado Cobertura] = "Exceso"), 0)
+		formatString: $#,##0.00
+		displayFolder: Cobertura e Inventario\Valor
+		lineageTag: 8791705d-71c7-4539-9788-653e25c50589
+
+	measure 'Valor Sin Ventas' = COALESCE(CALCULATE([Valor Inventario], inventory[Estado Cobertura] = "Sin ventas"), 0)
+		formatString: $#,##0.00
+		displayFolder: Cobertura e Inventario\Valor
+		lineageTag: 4332df2b-416b-43fb-98d0-2c8e9f768555
+
+	/// Estado de cobertura dinámico de inventario basado en los últimos 90 días
+	measure 'Estado Cobertura' = ```
+			VAR Stock = [Stock Total]
+			VAR MaxFecha = CALCULATE(MAX(sales[Date]), REMOVEFILTERS('calendar'))
+			VAR MinFecha = MaxFecha - 89
+			VAR Ventas90D = 
+			    CALCULATE(
+			        SUM(sales[Units]),
+			        DATESBETWEEN('calendar'[Date], MinFecha, MaxFecha)
+			    )
+			VAR DiasCob = [Días Cobertura]
+			RETURN
+			    IF(
+			        ISBLANK(Stock) && (ISBLANK(Ventas90D) || Ventas90D = 0),
+			        BLANK(),
+			        SWITCH(
+			            TRUE(),
+			            COALESCE(Stock, 0) = 0, "Agotado",
+			            ISBLANK(Ventas90D) || Ventas90D = 0, "Sin ventas",
+			            DiasCob <= 14, "Crítico",
+			            DiasCob <= 60, "Sano",
+			            "Exceso"
+			        )
+			    )
+			```
+		displayFolder: Cobertura e Inventario
+		lineageTag: d9bbab43-963f-47fa-a255-f25146804179
+
+	/// Color hexadecimal para formato condicional según el Estado de Cobertura
+	measure 'Color Estado Cobertura' =
+			SWITCH(
+			    [Estado Cobertura],
+			    "Crítico", "#E74C3C",     // Rojo
+			    "Agotado", "#7F8C8D",     // Gris oscuro
+			    "Sano", "#27AE60",        // Verde
+			    "Exceso", "#F39C12",      // Ámbar/Naranja
+			    "Sin ventas", "#BDC3C7",  // Gris claro
+			    BLANK()
+			)
+		displayFolder: Cobertura e Inventario
+		lineageTag: a330bbf5-abfa-44cb-9910-c8c4d1739517
+
 	column Valor
 		isHidden
 		lineageTag: bdc9cb42-0005-41cd-ae5e-d7f134b82edd
